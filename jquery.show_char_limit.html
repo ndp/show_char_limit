@@ -1,0 +1,42 @@
+<html>
+<head>
+  <script src="./lib/jquery-1.2.6.js"></script>
+  <script src="./lib/jquery.fn.js"></script>
+  <script src="./lib/jquery.print.js"></script>
+  <script src="./lib/screw.builder.js"></script>
+  <script src="./lib/screw.matchers.js"></script>
+  <script src="./lib/screw.events.js"></script>
+  <script src="./lib/screw.behaviors.js"></script>
+  <link rel="stylesheet" href="./lib/screw.css">
+
+  <!-- code under test -->
+  <script src="./jquery.show_char_limit-1.1.1.js"></script>
+
+  <!-- tests -->
+  <script src="spec_helper.js"></script>
+  <script src="./jquery.show_char_limit_spec.js"></script>
+
+
+</head>
+<body>
+<div id='fixtures'>
+  <fieldset id='example1'>
+    <input maxlength="20" type='text' value="defaults"/>
+  </fieldset>
+
+  <fieldset id='example2'>
+    <input type='text' value="custom feedback" maxlength='20'/>
+    <span class='count'></span>
+  </fieldset>
+
+  <fieldset id='example3'>
+    <input type='text' value="custom feedback"/>
+    <span class='count'></span>
+  </fieldset>
+
+  <fieldset id='textarea_example'>
+    <textarea></textarea>
+  </fieldset>
+</div>
+</body>
+</html>
