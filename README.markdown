@@ -1,8 +1,9 @@
 # Summary
 
-Display interactive feedback about a text field or text area with character limit.
+jQuery plugin to display interactive character limit feedback about a text field or textarea.
 
-## Description
+
+### Description
 
 The caller provides the "status" element to display the feedback. So that it can support instrumenting multiple fields at once, it can calculate the status field from the target field's ID, such as "#tweet" => "#tweet_status".
 
@@ -12,11 +13,11 @@ Optionally it can add a class to any DOM elements when the field is over the lim
 
 This does nothing to enforce the limit. This is intentional.
 
-## Usage
+### Usage
 
 <pre>$([selector]).show_char_limit([max_length], [options]);</pre>
 
-### Options:
+#### Options:
 
 * <code>maxlength</code>. The maximum number of characters allowed in the input. May also be passed as the first parameter. Overriden by an attribute named maxlength on the input element.
 * <code>status_element</code>: element to receive the status message. It can be a jQuery object, element or DOM id. Overrides status_element_suffix
@@ -26,10 +27,10 @@ This does nothing to enforce the limit. This is intentional.
 * <code>status_style</code>. Default is 'text', which displays a short phrase of "X characters left" or "X characters over". You may also pass 'chars_typed', which displays the number of characters the user has typed (see twitter). Or 'chars_left', which counts down to zero.
 
 
-### Events
+#### Events
 
 * to manually trigger updating of the counter, $(text element).trigger('showLimit');
 
-## Demo
+### Demo
 
 http://www.ndpsoftware.com/show_char_limit.php
