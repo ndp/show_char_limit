@@ -38,8 +38,8 @@ just explicitly provide the element.
 
 #### Events
 
-* to manually trigger updating of the counter, $(text element).trigger('showLimit');
+* to manually trigger updating of the counter,<code> $(text element).trigger('showLimit');</code>
 
 ### Demo
 
-http://www.ndpsoftware.com/show_char_limit.php
+[Demo](http://www.ndpsoftware.com/show_char_limit.php)
