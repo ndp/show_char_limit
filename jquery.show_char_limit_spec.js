@@ -28,6 +28,15 @@ Screw.Unit(function() {
         expect($('#textarea_example span.status').text()).to(equal, "137 characters left");
       });
     });
+    describe('manually triggering update', function() {
+      before(function() {
+        $('#textarea_example textarea').val('abc');
+        $('#textarea_example textarea').trigger('showLimit');
+      });
+      it("should show characters left", function() {
+        expect($('#textarea_example span.status').text()).to(equal, "137 characters left");
+      });
+    });
   });
 
   describe('text inputs', function() {
@@ -46,6 +55,15 @@ Screw.Unit(function() {
         before(function() {
           $('#example1 input').val('abc');
           $('#example1 input').trigger('keyup');
+        });
+        it("should show characters left", function() {
+          expect($('#example1 span.status').text()).to(equal, "17 characters left");
+        });
+      });
+      describe('manually triggering update', function() {
+        before(function() {
+          $('#example1 input').val('abc');
+          $('#example1 input').trigger('showLimit');
         });
         it("should show characters left", function() {
           expect($('#example1 span.status').text()).to(equal, "17 characters left");
