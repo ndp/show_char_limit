@@ -19,9 +19,9 @@
     }
     return maxLen;
   }
-  
 
-  function generateMessage(style, charsLeft) {
+
+  function generateMessage(style, currLen, charsLeft) {
     var msg;
     if (style == 'chars_typed') {
       msg = "" + currLen;
@@ -69,16 +69,13 @@
         statusElem = '#' + $this.attr('id') + o.status_element_suffix;
         $this.after('<span class="status" id="' + $this.attr('id') + o.status_element_suffix + '"></span>');
       }
-      $(statusElem).html(generateMessage(o.status_style, charsLeft));
+      $(statusElem).html(generateMessage(o.status_style, currLen, charsLeft));
 
       if (o.error_element || o.error_element_suffix) {
         var e = o.error_element ? o.error_element : ("#" + $this.attr('id') + o.error_element_suffix);
-        if (charsLeft < 0) {
-          $(e).addClass(o.error_class);
-        } else {
-          $(e).removeClass(o.error_class);
-        }
+        $(e).toggleClass(o.error_class, charsLeft < 0);
       }
+      $this.trigger((charsLeft < 0) ? 'validationError' : 'validationOk');
     });
 
     return this.each(function() {

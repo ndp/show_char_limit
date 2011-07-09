@@ -1,5 +1,14 @@
 Screw.Unit(function() {
 
+  var validationOkCalled, validationErrorCalled;
+  var validationOk = function() {
+    validationOkCalled = true;
+  }
+  var validationError = function() {
+    validationErrorCalled = true;
+  }
+
+
   before(function() {
     var $f = $('#fixtures');
     if ($f.attr('original')) {
@@ -7,6 +16,8 @@ Screw.Unit(function() {
     } else {
       $f.attr('original', $f.html());
     }
+    validationOkCalled = false;
+    validationErrorCalled = false;
   });
 
   describe("text areas", function() {
@@ -118,48 +129,82 @@ Screw.Unit(function() {
         expect($('#example3 .count').text()).to(equal, "15");
       });
     });
+
     describe("one character left", function() {
+
       before(function() {
-        jQuery('#example3 input').show_char_limit(16, {status_element:'#example3 .count'});
+        jQuery('#example3 input').show_char_limit(16, {status_element:'#example3 .count'})
+                .bind('validationOk', validationOk)
+                .bind('validationError', validationError)
+                .keyup();
       });
       it("should be singular", function() {
         expect($('#example3 .count').text()).to(equal, "1 character left");
       });
       it("should have no error class", function() {
         expect($('#example3').hasClass('error')).to(equal, false);
+        expect($('#example3 input').hasClass('error')).to(equal, false);
+      });
+      it('should trigger validationOk event', function() {
+        expect(validationOkCalled).to(equal, true);
+        expect(validationErrorCalled).to(equal, false);
       });
     });
     describe("exact length", function() {
       before(function() {
-        jQuery('#example3 input').show_char_limit(15, {status_element:'#example3 .count'});
+        jQuery('#example3 input').show_char_limit(15, {status_element:'#example3 .count'})
+                .bind('validationOk', validationOk)
+                .bind('validationError', validationError)
+                .keyup();
       });
       it("should show characters left", function() {
         expect($('#example3 .count').text()).to(equal, "0 characters left");
       });
       it("should have no error class", function() {
         expect($('#example3').hasClass('error')).to(equal, false);
+        expect($('#example3 input').hasClass('error')).to(equal, false);
+      });
+      it('should trigger validationOk event', function() {
+        expect(validationOkCalled).to(equal, true);
+        expect(validationErrorCalled).to(equal, false);
       });
     });
     describe("one too many character", function() {
       before(function() {
-        jQuery('#example3 input').show_char_limit(14, {status_element:'#example3 .count', error_element:'#example3'});
+        jQuery('#example3 input').show_char_limit(14, {status_element:'#example3 .count', error_element:'#example3'})
+                .bind('validationOk', validationOk)
+                .bind('validationError', validationError)
+                .keyup();
       });
       it("should show plural", function() {
         expect($('#example3 .count').text()).to(equal, "1 character over");
       });
       it("should add an error class", function() {
         expect($('#example3').hasClass('error')).to(equal, true);
+        expect($('#example3 input').hasClass('error')).to(equal, false);
+      });
+      it('should trigger validationError event', function() {
+        expect(validationOkCalled).to(equal, false);
+        expect(validationErrorCalled).to(equal, true);
       });
     });
     describe("two too many characters", function() {
       before(function() {
-        jQuery('#example3 input').show_char_limit(13, {status_element:'#example3 .count'});
+        jQuery('#example3 input').show_char_limit(13, {status_element:'#example3 .count', error_element:'#example3'})
+                .bind('validationOk', validationOk)
+                .bind('validationError', validationError)
+                .keyup();
       });
       it("should show plural", function() {
         expect($('#example3 .count').text()).to(equal, "2 characters over");
       });
-      it("should have no error class", function() {
-        expect($('.error')).to(have_length, 0);
+      it("should add an error class", function() {
+        expect($('#example3').hasClass('error')).to(equal, true);
+        expect($('#example3 input').hasClass('error')).to(equal, false);
+      });
+      it('should trigger validationError event', function() {
+        expect(validationOkCalled).to(equal, false);
+        expect(validationErrorCalled).to(equal, true);
       });
     });
   });

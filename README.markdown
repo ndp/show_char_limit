@@ -38,7 +38,11 @@ just explicitly provide the element.
 
 #### Events
 
-* to manually trigger updating of the counter,<code> $(text element).trigger('showLimit');</code>
+* to manually trigger updating of the counter, <code>$(text element).trigger('showLimit');</code>
+* listen for '<code>validationOk</code>' when validation passes (every keystroke), eg.
+  <code>jQuery('input').show_char_limit(...).bind('validationOk', function() {})</code>
+* listen for '<code>validationError</code>' when validation fails with too many characters (every keystroke), eg.
+  <code>jQuery('input').show_char_limit(...).bind('validationError', function() {})</code>
 
 ### Demo
 
