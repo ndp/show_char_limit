@@ -47,3 +47,10 @@ just explicitly provide the element.
 ### Demo
 
 [Demo](http://www.ndpsoftware.com/show_char_limit.php)
+
+
+## Legal
+
+Copyright (c) 2005-2012 Andrew J. Peterson
+[Apache License](https://github.com/ndp/show_char_limit/raw/master/LICENSE)
+
