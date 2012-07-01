@@ -1,6 +1,7 @@
 /**
  * Display interactive character limit feedback for text field or text area.
- * see http://ndpsoftware.com/show_char_limit.php
+ * see https://github.com/ndp/show_char_limit
+ * License: apache 2.0
  */
 (function($) {
 
