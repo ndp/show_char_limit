@@ -71,6 +71,7 @@
         $this.after('<span class="status" id="' + $this.attr('id') + o.status_element_suffix + '"></span>');
       }
       $(statusElem).html(generateMessage(o.status_style, currLen, charsLeft));
+      $(statusElem).toggleClass(o.error_class, charsLeft < 0);
 
       if (o.error_element || o.error_element_suffix) {
         var e = o.error_element ? o.error_element : ("#" + $this.attr('id') + o.error_element_suffix);
