@@ -7,8 +7,7 @@
 
   function ensureElementHasId($this) {
     if ($this.attr('id') == '') {
-      var id = "" + Math.floor(Math.random() * 9999999999);
-      $this.attr('id', id);
+      $this.attr('id', "" + Math.floor(Math.random() * 9999999999));
     }
   }
 
@@ -22,27 +21,35 @@
   }
 
 
-  function generateMessage(style, currLen, charsLeft) {
-    var msg;
+  function charsTypedMsg(currLen, charsLeft) {
+    return "" + currLen;
+  }
+  function charsLeftMsg(currLen, charsLeft) {
+    return "" + charsLeft;
+  }
+
+  function defaultMsg(currLen, charsLeft) {
+    var status = charsLeft >= 0 ? 'left' : 'over';
+    var unit = (Math.abs(charsLeft) != 1 ? "characters" : "character");
+    return "" + Math.abs(charsLeft) + " " + unit + " " + status;
+  }
+
+  function statusMessageFn(style) {
     if (style == 'chars_typed') {
-      msg = "" + currLen;
+      return charsTypedMsg
     } else if (style == 'chars_left') {
-      msg = "" + charsLeft;
+      return charsLeftMsg
     } else {
-      var status = charsLeft >= 0 ? 'left' : 'over';
-      var unit = (Math.abs(charsLeft) != 1 ? "characters" : "character");
-      msg = "" + Math.abs(charsLeft) + " " + unit + " " + status;
+      return defaultMsg
     }
-    return msg;
   }
 
 
   $.fn.showCharLimit = function(limitOrOptions, options) {
 
-    if (!options) options = {};
-
-    // if provided max_length, save it
+    // if provided max_length as unnamed argument, save it
     if (typeof limitOrOptions === 'number') {
+      if (!options) options = {};
       options['maxlength'] = limitOrOptions
     } else {
       options = limitOrOptions || {}
@@ -51,9 +58,11 @@
     var o = $.extend({
       error_class: 'error',
       status_style: 'text',
-      status_element_suffix: '__status'
+      status_element_suffix: '__status',
+      status_min: 0
     }, options);
 
+    var statusMessage = statusMessageFn(o.status_style)
 
     $(this).bind('showLimit', function() {
 
@@ -70,7 +79,11 @@
         statusElem = '#' + $this.attr('id') + o.status_element_suffix;
         $this.after('<span class="status" id="' + $this.attr('id') + o.status_element_suffix + '"></span>');
       }
-      $(statusElem).html(generateMessage(o.status_style, currLen, charsLeft));
+      if (currLen < o.status_min) {
+        $(statusElem).html('');
+      } else {
+        $(statusElem).html(statusMessage(currLen, charsLeft));
+      }
 
       if (o.error_element || o.error_element_suffix) {
         var e = o.error_element ? o.error_element : ("#" + $this.attr('id') + o.error_element_suffix);

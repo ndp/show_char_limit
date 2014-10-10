@@ -28,12 +28,14 @@ just explicitly provide the element.
 
 #### Options:
 
-* <code>maxlength</code>. The maximum number of characters allowed in the input. May also be passed as the first parameter. This value can (and will be) overriden by an attribute named <code>maxlength</code> on the input element.
+* <code>maxlength</code>. The maximum number of characters allowed in the input. May also be passed as the first parameter. 
+  This value can (and will be) overriden by an attribute named <code>maxlength</code> on the input element.
 * <code>status_element</code>: element to receive the status message. It can be a jQuery object, element or DOM id. Overrides <code>status_element_suffix</code>
 * <code>status_element_suffix</code>: a string appended to the src element's id to identify the status element. For this markup: <code>&lt;input type="text" id="name"/&gt;&lt;span id="name_lim"&gt;20 chars&lt;/span&gt;</code>, pass <code>_lim</code>. Default value is <code>__status</code>. If the element is not found, a SPAN is created immediately after the input.
 * <code>error_element</code>. An element (or set of elements) have CSS class <code>error</code> added when there are too many characters in the target element. Can be a jQuery object, element or DOM id.
 * <code>error_class</code>. Alternate class set on error_element above. Defaults to <code>error</code>.
 * <code>status_style</code>. Default is <code>text</code>, which displays a short phrase of "X characters left" or "X characters over". You may also pass <code>chars_typed</code>, which displays the number of characters the user has typed (see twitter). Or <code>chars_left</code>, which counts down to zero.
+* <code>status_min</code>. Lower limit when status is shown. Useful if you don't want to warn the user until she gets close to the limit. Defaults to 0.
 
 
 #### Events
@@ -47,6 +49,11 @@ just explicitly provide the element.
 ### Demo
 
 [Demo](http://www.ndpsoftware.com/show_char_limit.php)
+
+
+### Tests
+
+Open `jquery.show_char_limit.html` in a browser.
 
 
 ## Legal

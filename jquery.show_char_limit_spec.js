@@ -89,6 +89,18 @@ Screw.Unit(function() {
         expect($('#example2 .count').text()).to(equal, "5 characters left");
       });
     });
+
+    describe("setting status_min size", function() {
+      it("should not show characters left", function() {
+        jQuery('#example2 input').val('12345').show_char_limit({status_element:'#example2 .count', status_min: 10});
+        expect($('#example2 .count').text()).to(equal, "");
+      });
+      it("should not show characters left", function() {
+        jQuery('#example2 input').val('123456789A').show_char_limit({status_element:'#example2 .count', status_min: 10});
+        expect($('#example2 .count').text()).to(equal, "10 characters left");
+      });
+    });
+
     describe("status style 'chars_typed'", function() {
       before(function() {
         jQuery('#example2 input').show_char_limit({status_element:'#example2 .count', status_style: 'chars_typed'});
