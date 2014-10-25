@@ -1,9 +1,50 @@
 {
-  "private": true,
+  "name": "showCharLimit",
+  "description": "jQuery plugin decorating a text input or textarea with a counter or count-down counter of user input.",
+  "version": "1.5.0",
+  "keywords": [
+    "form",
+    "input",
+    "twitter",
+    "UX",
+    "UI",
+    "widget"
+  ],
+  "author": [
+    {
+      "name": "Andrew Peterson",
+      "email": "andy@ndpsoftware.com",
+      "url": "http://ndpsoftware.com"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.5"
+  },
+  "demos": [],
+  "bugs": "https://github.com/ndp/show_char_limit/issues",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/ndp/show_char_limit"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "https://github.com/ndp/show_char_limit/blob/1.2.0/LICENSE.txt"
+    }
+  ],
+  "homepage": "https://github.com/ndp/show_char_limit",
+  "docs": "https://github.com/ndp/show_char_limit",
+  "dependencies": {
+    "jquery": ">=1.5"
+  },
   "devDependencies": {
   },
   "scripts": {
     "test": "open jquery.show_char_limit.html"
-  },
-  "version": "1.5.0"
+  }
 }
+
+
+
