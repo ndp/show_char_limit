@@ -5,9 +5,9 @@
  */
 (function ($) {
 
-  function ensureElementHasId($this) {
-    if ($this.attr('id') == '') {
-      $this.attr('id', "" + Math.floor(Math.random() * 9999999999));
+  function ensureAnId($e) {
+    if ($e.attr('id') == '') {
+      $e.attr('id', "" + Math.floor(Math.random() * 9999999999));
     }
   }
 
@@ -21,21 +21,22 @@
   }
 
 
-  function charsTypedMsg(currLen, charsLeft) {
-    return "" + currLen;
-  }
-
-  function charsLeftMsg(currLen, charsLeft) {
-    return "" + charsLeft;
-  }
-
-  function defaultMsg(currLen, charsLeft) {
-    var status = charsLeft >= 0 ? 'left' : 'over';
-    var unit = (Math.abs(charsLeft) != 1 ? "characters" : "character");
-    return "" + Math.abs(charsLeft) + " " + unit + " " + status;
-  }
-
   function statusMessageFn(style) {
+
+    function charsTypedMsg(currLen, charsLeft) {
+      return "" + currLen;
+    }
+
+    function charsLeftMsg(currLen, charsLeft) {
+      return "" + charsLeft;
+    }
+
+    function defaultMsg(currLen, charsLeft) {
+      var status = charsLeft >= 0 ? 'left' : 'over';
+      var unit = (Math.abs(charsLeft) != 1 ? "characters" : "character");
+      return "" + Math.abs(charsLeft) + " " + unit + " " + status;
+    }
+
     if (style == 'chars_typed') {
       return charsTypedMsg
     } else if (style == 'chars_left') {
@@ -67,14 +68,15 @@
 
     var statusMessage = statusMessageFn(options.status_style)
 
+
     $(this).bind('showLimit', function () {
 
       var $this = $(this);
 
       var val = $this.val();
       if (options.strip) {
-        val = val.replace(/^\s+/,'')
-        val = val.replace(/\s+$/,'')
+        val = val.replace(/^\s+/, '')
+        val = val.replace(/\s+$/, '')
       }
       var currLen = val.length
       if (options.newline_cost !== 1 && /[\n\r]/.test(val)) {
@@ -86,7 +88,7 @@
 
       var statusElem = options.status_element ? options.status_element : ("#" + $this.attr('id') + options.status_element_suffix);
       if ($(statusElem).size() == 0) {
-        ensureElementHasId($this);
+        ensureAnId($this);
         statusElem = '#' + $this.attr('id') + options.status_element_suffix;
         $this.after('<span class="status" id="' + $this.attr('id') + options.status_element_suffix + '"></span>');
       }
@@ -104,15 +106,18 @@
     });
 
     return this.each(function () {
-      $(this).trigger('showLimit');
-      $(this).keyup(function () {
-        $(this).trigger('showLimit');
-      });
+      $(this).
+          trigger('showLimit').
+          keyup(function () {
+            $(this).trigger('showLimit');
+          }).
+          change(function () {
+            $(this).trigger('showLimit');
+          });
     });
   };
 
   $.fn.show_char_limit = $.fn.showCharLimit; // backward compatible
-
 
 })(jQuery);
 

@@ -18,12 +18,14 @@ Screw.Unit(function() {
     }
     validationOkCalled = false
     validationErrorCalled = false
+
   })
 
   describe("text areas", function() {
     var $textArea
     before(function() {
-      $textArea = jQuery('#textarea_example textarea').show_char_limit(140, {newline_cost: 100})
+      $textArea = jQuery('#textarea_example textarea')
+      $textArea.show_char_limit(140, {newline_cost: 100})
     })
     it("creates span for character limit", function() {
       expect($('#textarea_example span.status')).to(have_length, 1)
