@@ -1,0 +1,33 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@2.0.0-alpha-5
+3 info using node@v0.10.30
+4 verbose node symlink /usr/local/bin/node
+5 verbose publish [ '.' ]
+6 verbose cache add [ '.', null ]
+7 verbose cache add spec="." args=[".",null]
+8 verbose cache add local package /Users/ndp/workspace/show_char_limit
+9 silly lockFile 3a52ce78- .
+10 verbose lock . /Users/ndp/.npm/3a52ce78-.lock
+11 silly lockFile 3a52ce78- .
+12 silly lockFile 3a52ce78- .
+13 error addLocal Could not install .
+14 error Error: No name provided
+14 error     at needName (/usr/local/lib/node_modules/npm/lib/cache/add-local.js:124:37)
+14 error     at /usr/local/lib/node_modules/npm/lib/cache/add-local.js:62:10
+14 error     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:51:40
+14 error     at final (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:349:17)
+14 error     at then (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:126:33)
+14 error     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:331:40
+14 error     at evalmachine.<anonymous>:271:14
+14 error     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:102:5
+14 error     at Object.oncomplete (evalmachine.<anonymous>:107:15)
+15 error If you need help, you may report this *entire* log,
+15 error including the npm and node versions, at:
+15 error     <http://github.com/npm/npm/issues>
+16 error System Darwin 13.4.0
+17 error command "node" "/usr/local/bin/npm" "publish"
+18 error cwd /Users/ndp/workspace/show_char_limit
+19 error node -v v0.10.30
+20 error npm -v 2.0.0-alpha-5
+21 verbose exit [ 1, true ]

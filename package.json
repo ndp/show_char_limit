@@ -4,5 +4,6 @@
   },
   "scripts": {
     "test": "open jquery.show_char_limit.html"
-  }
+  },
+  "version": "1.5.0"
 }
