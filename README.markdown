@@ -56,6 +56,9 @@ just explicitly provide the element.
 Open `jquery.show_char_limit.html` in a browser.
 
 
+### History
+* 1.3.1: introduced `status_min` attribute
+
 ## Legal
 
 Copyright (c) 2005-2012 Andrew J. Peterson
