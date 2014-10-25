@@ -61,6 +61,7 @@ Open `jquery.show_char_limit.html` in a browser.
 
 
 ### History
+* 1.4.0: introduced `strip` and `newline_cost` attribute
 * 1.3.1: introduced `status_min` attribute
 
 ## Legal
