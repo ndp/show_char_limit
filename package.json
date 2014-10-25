@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "open jquery.show_char_limit.html"
+  }
+}

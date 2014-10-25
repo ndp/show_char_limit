@@ -1,0 +1,21 @@
+{
+  "name": "jquery-show_char_limit",
+  "version": "1.5",
+  "homepage": "https://github.com/ndp/show_char_limit",
+  "authors": [
+    "Andrew J. Peterson <andy@ndpsoftware.com>"
+  ],
+  "description": "jQuery plugin decorating a text input or textarea with a counter or count-down counter of user input.",
+  "main": "jquery.show_char_limit.js",
+  "keywords": [
+    "jquery",
+    "plugin",
+    "form",
+    "twitter",
+    "UX",
+    "UI",
+    "widget",
+    "jquery-plugin"
+  ],
+  "license": "Apache 2.0"
+}
