@@ -1,5 +1,5 @@
 {
-  "name": "showCharLimit",
+  "name": "show_char_limit",
   "description": "jQuery plugin decorating a text input or textarea with a counter or count-down counter of user input.",
   "version": "1.5.0",
   "keywords": [
