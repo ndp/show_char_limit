@@ -3,7 +3,7 @@
  * see https://github.com/ndp/show_char_limit
  * License: apache 2.0
  */
-(function($) {
+(function ($) {
 
   function ensureElementHasId($this) {
     if ($this.attr('id') == '') {
@@ -24,6 +24,7 @@
   function charsTypedMsg(currLen, charsLeft) {
     return "" + currLen;
   }
+
   function charsLeftMsg(currLen, charsLeft) {
     return "" + charsLeft;
   }
@@ -45,7 +46,7 @@
   }
 
 
-  $.fn.showCharLimit = function(limitOrOptions, options) {
+  $.fn.showCharLimit = function (limitOrOptions, options) {
 
     // if provided max_length as unnamed argument, save it
     if (typeof limitOrOptions === 'number') {
@@ -55,46 +56,56 @@
       options = limitOrOptions || {}
     }
 
-    var o = $.extend({
+    options = $.extend({
       error_class: 'error',
       status_style: 'text',
       status_element_suffix: '__status',
-      status_min: 0
+      status_min: 0,
+      newline_cost: 1,
+      strip: true
     }, options);
 
-    var statusMessage = statusMessageFn(o.status_style)
+    var statusMessage = statusMessageFn(options.status_style)
 
-    $(this).bind('showLimit', function() {
+    $(this).bind('showLimit', function () {
 
       var $this = $(this);
 
-      var currLen = $this.val().length;
+      var val = $this.val();
+      if (options.strip) {
+        val = val.replace(/^\s+/,'')
+        val = val.replace(/\s+$/,'')
+      }
+      var currLen = val.length
+      if (options.newline_cost !== 1 && /[\n\r]/.test(val)) {
+        currLen += (/[\n\r]/g.exec(val).length * (options.newline_cost - 1));
+      }
 
-      var maxLen = calcMaxLength($this, o['maxlength']);
+      var maxLen = calcMaxLength($this, options['maxlength']);
       var charsLeft = maxLen - currLen;
 
-      var statusElem = o.status_element ? o.status_element : ("#" + $this.attr('id') + o.status_element_suffix);
+      var statusElem = options.status_element ? options.status_element : ("#" + $this.attr('id') + options.status_element_suffix);
       if ($(statusElem).size() == 0) {
         ensureElementHasId($this);
-        statusElem = '#' + $this.attr('id') + o.status_element_suffix;
-        $this.after('<span class="status" id="' + $this.attr('id') + o.status_element_suffix + '"></span>');
+        statusElem = '#' + $this.attr('id') + options.status_element_suffix;
+        $this.after('<span class="status" id="' + $this.attr('id') + options.status_element_suffix + '"></span>');
       }
-      if (currLen < o.status_min) {
+      if (currLen < options.status_min) {
         $(statusElem).html('');
       } else {
         $(statusElem).html(statusMessage(currLen, charsLeft));
       }
 
-      if (o.error_element || o.error_element_suffix) {
-        var e = o.error_element ? o.error_element : ("#" + $this.attr('id') + o.error_element_suffix);
-        $(e).toggleClass(o.error_class, charsLeft < 0);
+      if (options.error_element || options.error_element_suffix) {
+        var e = options.error_element ? options.error_element : ("#" + $this.attr('id') + options.error_element_suffix);
+        $(e).toggleClass(options.error_class, charsLeft < 0);
       }
       $this.trigger((charsLeft < 0) ? 'validationError' : 'validationOk');
     });
 
-    return this.each(function() {
+    return this.each(function () {
       $(this).trigger('showLimit');
-      $(this).keyup(function() {
+      $(this).keyup(function () {
         $(this).trigger('showLimit');
       });
     });

@@ -21,8 +21,9 @@ Screw.Unit(function() {
   })
 
   describe("text areas", function() {
+    var $textArea
     before(function() {
-      jQuery('#textarea_example textarea').show_char_limit(140)
+      $textArea = jQuery('#textarea_example textarea').show_char_limit(140, {newline_cost: 100})
     })
     it("creates span for character limit", function() {
       expect($('#textarea_example span.status')).to(have_length, 1)
@@ -32,8 +33,8 @@ Screw.Unit(function() {
     })
     describe('typing a character', function() {
       before(function() {
-        $('#textarea_example textarea').val('abc')
-        $('#textarea_example textarea').trigger('keyup')
+        $textArea.val('abc')
+        $textArea.trigger('keyup')
       })
       it("should show characters left", function() {
         expect($('#textarea_example span.status').text()).to(equal, "137 characters left")
@@ -41,14 +42,59 @@ Screw.Unit(function() {
     })
     describe('manually triggering update', function() {
       before(function() {
-        $('#textarea_example textarea').val('abc')
-        $('#textarea_example textarea').trigger('showLimit')
+        $textArea.val('abc')
+        $textArea.trigger('showLimit')
       })
       it("should show characters left", function() {
         expect($('#textarea_example span.status').text()).to(equal, "137 characters left")
       })
     })
 
+    describe('line feeds', function() {
+      describe('typing a cr', function() {
+        before(function() {
+          $textArea.val('a\rc')
+          $textArea.trigger('keyup')
+        })
+        it("should show characters left", function() {
+          expect($('#textarea_example span.status').text()).to(equal, "38 characters left")
+        })
+      })
+      describe('typing a lf', function() {
+        before(function() {
+          $textArea.val('a\nc')
+          $textArea.trigger('keyup')
+        })
+        it("should show characters left", function() {
+          expect($('#textarea_example span.status').text()).to(equal, "38 characters left")
+        })
+      })
+      describe('typing a lf or cr at ends are ignored', function() {
+        before(function() {
+          $textArea.val('\r\n\rabc \n')
+          $textArea.trigger('keyup')
+        })
+        it("should show characters left", function() {
+          expect($('#textarea_example span.status').text()).to(equal, "137 characters left")
+        })
+      })
+    })
+
+  })
+
+  describe('strip', function() {
+    it('strips both front and back', function() {
+      jQuery('#example3 input').show_char_limit(5, {strip: true})
+      $('#example3 input').val(' abc  ')
+      $('#example3 input').keyup()
+      expect($('#example3 span.status').text()).to(equal, "2 characters left")
+    })
+    it('can be turned off', function() {
+      jQuery('#example3 input').show_char_limit(5, {strip: false})
+      $('#example3 input').val(' ab ')
+      $('#example3 input').keyup()
+      expect($('#example3 span.status').text()).to(equal, "1 character left")
+    })
   })
 
 

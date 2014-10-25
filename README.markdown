@@ -35,7 +35,11 @@ just explicitly provide the element.
 * <code>error_element</code>. An element (or set of elements) have CSS class <code>error</code> added when there are too many characters in the target element. Can be a jQuery object, element or DOM id.
 * <code>error_class</code>. Alternate class set on error_element above. Defaults to <code>error</code>.
 * <code>status_style</code>. Default is <code>text</code>, which displays a short phrase of "X characters left" or "X characters over". You may also pass <code>chars_typed</code>, which displays the number of characters the user has typed (see twitter). Or <code>chars_left</code>, which counts down to zero.
-* <code>status_min</code>. Lower limit when status is shown. Useful if you don't want to warn the user until she gets close to the limit. Defaults to 0.
+* <code>status_min _= 0_</code>. Lower limit when status is shown. Useful if you don't want to warn the user until she gets close to the limit. Defaults to 0.
+* <code>newline_cost _= 1_<code>. Additional "penalty" to add core carriage returns or linefeeds. Useful to estimate text 
+  layouts.
+* <code>strip _= true_</code>. Remove whitespace characters from the beginning and end of the text before counting
+  characters. _Does not remove them from the actual value._
 
 
 #### Events
