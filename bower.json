@@ -24,6 +24,11 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "components"
+    "components",
+    "jquery.show_char_limit.html",
+    "jquery.show_char_limit_spec.js",
+    "lib",
+    "showCharLimit.jquery.json",
+    "package.json"
   ]
 }
