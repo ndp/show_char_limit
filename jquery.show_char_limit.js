@@ -63,13 +63,14 @@
       status_element_suffix: '__status',
       status_min: 0,
       newline_cost: 1,
-      strip: true
+      strip: true,
+      deprecated_events: true
     }, options);
 
     var statusMessage = statusMessageFn(options.status_style)
 
 
-    $(this).bind('showLimit', function () {
+    $(this).bind('check.show-char-limit', function () {
 
       var $this = $(this);
 
@@ -102,17 +103,29 @@
         var e = options.error_element ? options.error_element : ("#" + $this.attr('id') + options.error_element_suffix);
         $(e).toggleClass(options.error_class, charsLeft < 0);
       }
-      $this.trigger((charsLeft < 0) ? 'validationError' : 'validationOk');
+      $this.trigger((charsLeft < 0) ? 'error.show-char-limit' : 'ok.show-char-limit');
     });
 
     return this.each(function () {
+      if (options.deprecated_events) {
+        $(this).bind('showLimit ok.show-char-limit error.show-char-limit', function(e) {
+          if (e.type == 'showLimit') {
+            $(this).trigger('check.show-char-limit')
+          } else if (e.type == 'ok') {
+            $(this).trigger('validationOk')
+          } else if (e.type == 'error') {
+            $(this).trigger('validationError')
+          }
+        })
+      }
+
       $(this).
-          trigger('showLimit').
+          trigger('check.show-char-limit').
           keyup(function () {
-            $(this).trigger('showLimit');
+            $(this).trigger('check.show-char-limit');
           }).
           change(function () {
-            $(this).trigger('showLimit');
+            $(this).trigger('check.show-char-limit');
           });
     });
   };

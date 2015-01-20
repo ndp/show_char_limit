@@ -58,11 +58,18 @@ of status, or explicitly provide the element.
 
 #### Events
 
-* to manually trigger updating of the counter, <code>$(text element).trigger('showLimit');</code>
-* listen for '<code>validationOk</code>' when validation passes (every keystroke), eg.
-  <code>jQuery('input').show_char_limit(...).bind('validationOk', function() {})</code>
-* listen for '<code>validationError</code>' when validation fails with too many characters (every keystroke), eg.
-  <code>jQuery('input').show_char_limit(...).bind('validationError', function() {})</code>
+* to manually trigger updating of the counter, <code>$(text element).trigger('check.show-char-limit');</code>
+* listen for '<code>ok.show-char-limit</code>' when validation passes (every keystroke), eg.
+  <code>jQuery('input').show_char_limit(...).bind('ok.show-char-limit', function() {})</code>
+* listen for '<code>error.show-char-limit</code>' when validation fails with too many
+  characters (every keystroke), eg.
+  <code>jQuery('input').show_char_limit(...).bind('error.show-char-limit', function() {})</code>
+
+Legacy events are supported with the `deprecated_events` flag set. It is set in version 1.6, but
+will be turned off in future versions:
+* `showLimit` (deprecated) => `check.show-char-limit`
+* `validationOk` (deprecated) => `ok.show-char-limit`
+* `validationError` (deprecated) => `error.show-char-limit`
 
 ### Demo
 
@@ -75,6 +82,7 @@ Open `jquery.show_char_limit.html` in a browser.
 
 
 ### History
+* 1.6.0: rename events
 * 1.5.x: bower support
 * 1.4.0: introduced `strip` and `newline_cost` attribute
 * 1.3.1: introduced `status_min` attribute

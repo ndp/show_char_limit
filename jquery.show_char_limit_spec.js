@@ -45,7 +45,7 @@ Screw.Unit(function() {
     describe('manually triggering update', function() {
       before(function() {
         $textArea.val('abc')
-        $textArea.trigger('showLimit')
+        $textArea.trigger('check.show-char-limit')
       })
       it("should show characters left", function() {
         expect($('#textarea_example span.status').text()).to(equal, "137 characters left")
@@ -124,7 +124,7 @@ Screw.Unit(function() {
       describe('manually triggering update', function() {
         before(function() {
           $('#example1 input').val('abc')
-          $('#example1 input').trigger('showLimit')
+          $('#example1 input').trigger('check.show-char-limit')
         })
         it("should show characters left", function() {
           expect($('#example1 span.status').text()).to(equal, "17 characters left")
@@ -196,8 +196,8 @@ Screw.Unit(function() {
 
       before(function() {
         jQuery('#example3 input').show_char_limit(16, {status_element:'#example3 .count'})
-                .bind('validationOk', validationOk)
-                .bind('validationError', validationError)
+                .bind('ok.show-char-limit', validationOk)
+                .bind('error.show-char-limit', validationError)
                 .keyup()
       })
       it("should be singular", function() {
@@ -207,7 +207,7 @@ Screw.Unit(function() {
         expect($('#example3').hasClass('error')).to(equal, false)
         expect($('#example3 input').hasClass('error')).to(equal, false)
       })
-      it('should trigger validationOk event', function() {
+      it('should trigger ok.show-char-limit event', function() {
         expect(validationOkCalled).to(equal, true)
         expect(validationErrorCalled).to(equal, false)
       })
@@ -215,8 +215,8 @@ Screw.Unit(function() {
     describe("exact length", function() {
       before(function() {
         jQuery('#example3 input').show_char_limit(15, {status_element:'#example3 .count'})
-                .bind('validationOk', validationOk)
-                .bind('validationError', validationError)
+                .bind('ok.show-char-limit', validationOk)
+                .bind('error.show-char-limit', validationError)
                 .keyup()
       })
       it("should show characters left", function() {
@@ -226,7 +226,7 @@ Screw.Unit(function() {
         expect($('#example3').hasClass('error')).to(equal, false)
         expect($('#example3 input').hasClass('error')).to(equal, false)
       })
-      it('should trigger validationOk event', function() {
+      it('should trigger ok.show-char-limit event', function() {
         expect(validationOkCalled).to(equal, true)
         expect(validationErrorCalled).to(equal, false)
       })
@@ -234,8 +234,8 @@ Screw.Unit(function() {
     describe("one too many characters", function() {
       before(function() {
         jQuery('#example3 input').show_char_limit(14, {status_element:'#example3 .count', error_element:'#example3'})
-                .bind('validationOk', validationOk)
-                .bind('validationError', validationError)
+                .bind('ok.show-char-limit', validationOk)
+                .bind('error.show-char-limit', validationError)
                 .keyup()
       })
       it("should show plural", function() {
@@ -245,7 +245,7 @@ Screw.Unit(function() {
         expect($('#example3').hasClass('error')).to(equal, true)
         expect($('#example3 input').hasClass('error')).to(equal, false)
       })
-      it('should trigger validationError event', function() {
+      it('should trigger error.show-char-limit event', function() {
         expect(validationOkCalled).to(equal, false)
         expect(validationErrorCalled).to(equal, true)
       })
@@ -254,8 +254,8 @@ Screw.Unit(function() {
     describe("two too many characters", function() {
       before(function() {
         jQuery('#example3 input').show_char_limit(13, {status_element:'#example3 .count', error_element:'#example3'})
-                .bind('validationOk', validationOk)
-                .bind('validationError', validationError)
+                .bind('ok.show-char-limit', validationOk)
+                .bind('error.show-char-limit', validationError)
                 .keyup()
       })
       it("should show plural", function() {
@@ -265,11 +265,85 @@ Screw.Unit(function() {
         expect($('#example3').hasClass('error')).to(equal, true)
         expect($('#example3 input').hasClass('error')).to(equal, false)
       })
-      it('should trigger validationError event', function() {
+      it('should trigger error.show-char-limit event', function() {
         expect(validationOkCalled).to(equal, false)
         expect(validationErrorCalled).to(equal, true)
       })
     })
+  })
+
+  describe('legacy events', function () {
+    describe('turned on', function () {
+      describe('showLimit', function () {
+        it("responds to trigger", function () {
+          jQuery('#example1 input').show_char_limit({deprecated_events: true})
+          $('#example1 input').val('abc')
+          $('#example1 input').trigger('showLimit')
+          expect($('#example1 span.status').text()).to(equal, "17 characters left")
+        })
+      })
+
+
+      describe('validationError', function() {
+        it("triggers", function() {
+          jQuery('#example3 input').show_char_limit(13, {deprecated_events: true})
+            .bind('validationOk', validationOk)
+            .bind('validationError', validationError)
+            .keyup()
+          expect(validationErrorCalled).to(equal, true)
+          expect(validationOkCalled).to(equal, false)
+        })
+      })
+
+      describe('validationOk', function() {
+        it("triggers", function() {
+          jQuery('#example3 input').show_char_limit(16, {deprecated_events: true})
+            .bind('validationOk', validationOk)
+            .bind('validationError', validationError)
+            .keyup()
+          expect(validationErrorCalled).to(equal, false)
+          expect(validationOkCalled).to(equal, true)
+        })
+      })
+
+
+    })
+    describe('turned off', function () {
+      describe('showLimit', function () {
+        it("does not respond to trigger", function () {
+          jQuery('#example1 input').show_char_limit({deprecated_events: false})
+          $('#example1 input').val('abc')
+          $('#example1 input').trigger('showLimit')
+          expect($('#example1 span.status').text()).to_not(equal, "17 characters left")
+        })
+      })
+
+
+      describe('validationError', function() {
+        it("does not trigger", function() {
+          jQuery('#example3 input').show_char_limit(13, {deprecated_events: false})
+            .bind('validationOk', validationOk)
+            .bind('validationError', validationError)
+            .keyup()
+          expect(validationErrorCalled).to(equal, false)
+          expect(validationOkCalled).to(equal, false)
+        })
+      })
+
+      describe('validationOk', function() {
+        it("does not trigger", function() {
+          jQuery('#example3 input').show_char_limit(16, {deprecated_events: false})
+            .bind('validationOk', validationOk)
+            .bind('validationError', validationError)
+            .keyup()
+          expect(validationErrorCalled).to(equal, false)
+          expect(validationOkCalled).to(equal, false)
+        })
+      })
+
+
+    })
+
   })
 
 })
