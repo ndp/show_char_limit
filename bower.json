@@ -29,6 +29,7 @@
     "jquery.show_char_limit_spec.js",
     "lib",
     "showCharLimit.jquery.json",
+    "spec_helper.js",
     "package.json"
   ]
 }
