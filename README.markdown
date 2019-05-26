@@ -87,6 +87,10 @@ Open `jquery.show_char_limit.html` in a browser.
 * 1.4.0: introduced `strip` and `newline_cost` attribute
 * 1.3.1: introduced `status_min` attribute
 
+### Like it or have ideas?
+
+If you like this and would like me to do more intereactions like this, send me an email... or money https://venmo.com/ndpsoft or  https://www.gofundme.com/ndp-software
+
 ## Legal
 
 Copyright (c) 2005-2015 Andrew J. Peterson
